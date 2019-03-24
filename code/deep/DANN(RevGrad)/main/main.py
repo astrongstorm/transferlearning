@@ -1,3 +1,7 @@
+import sys
+sys.path.append("..")
+
+
 import numpy as np
 import torch
 import torch.optim as optim
@@ -26,7 +30,9 @@ def load_data():
     img_transform = transforms.Compose([
         transforms.Resize(IMAGE_SIZE),
         transforms.ToTensor(),
-        transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+        # transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
+        # transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+        transforms.Normalize([0.5], [0.5])
     ])
     dataset_source = datasets.MNIST(
         root=IMG_DIR_SRC,
@@ -59,7 +65,9 @@ def load_test_data(dataset_name):
     img_transform = transforms.Compose([
         transforms.Resize(IMAGE_SIZE),
         transforms.ToTensor(),
-        transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+        # transforms.Lambda(lambda x: x.repeat(3, 1, 1)),
+        # transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+        transforms.Normalize([0.5], [0.5])
     ])
     if dataset_name == 'mnist_m':
         test_list = '../dataset/mnist_m/mnist_m_test_labels.txt'
